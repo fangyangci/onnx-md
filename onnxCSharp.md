@@ -65,5 +65,5 @@ var session = new InferenceSession(modelFilePath, sessionOptions);
 > Fix:<br>
 > `nuget install TorchSharp-cuda-windows`<br>
 > add code:<br>
-> `Console.WriteLine(TorchSharp.torch.cuda.is_cudnn_available());`
-> `Console.WriteLine(TorchSharp.torch.cuda.is_available());`
+> `Console.WriteLine(TorchSharp.torch.cuda.is_cudnn_available());`<br>
+> `Console.WriteLine(TorchSharp.torch.cuda.is_available());`<br>
