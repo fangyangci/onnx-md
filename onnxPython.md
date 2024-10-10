@@ -3,14 +3,14 @@
 ## 1. Install [CUDA](https://developer.nvidia.com/cuda-downloads?target_os=Windows&target_arch=x86_64&target_version=11) & [cuDNN](https://developer.nvidia.com/cudnn-downloads?target_os=Windows&target_arch=x86_64&target_version=10)
 
 ## 2. Install [python package manager](https://www.anaconda.com/download/success)
-2.1 create environment 'AIEnv'.
-2.2 excute pip in the environment cmd (conda activate AIEnv).
-2.3 vscode choose the environment to excute.
+2.1 create environment 'AIEnv'.<br>
+2.2 excute pip in the environment cmd (conda activate AIEnv).<br>
+2.3 vscode choose the environment to excute.<br>
 
 ## 3. Install onnxruntime
-> pip install onnxruntime
-> (excute in AIEnv environment)
-```
+> pip install onnxruntime<br>
+> (excute in AIEnv environment)<br>
+```python
 import onnxruntime as ort
 session = ort.InferenceSession(model_file_path)
 # session.run(...)
@@ -19,46 +19,44 @@ session = ort.InferenceSession(model_file_path)
 ## 5. Run with GPU
 ### 1. DirectML
 > pip install onnxruntime-directml
-```
+```python
 import onnxruntime
 session = onnxruntime.InferenceSession(model_file_path, providers=['DmlExecutionProvider'])
 print("onnxruntime providers:",onnxruntime.get_device(),onnxruntime.get_available_providers())
 print("session providers:", session.get_providers())
 ```
-> expect:
-> onnxruntime providers: CPU-DML ['DmlExecutionProvider', 'CPUExecutionProvider']
-> session providers: ['DmlExecutionProvider', 'CPUExecutionProvider']
+> expect:<br>
+> onnxruntime providers: CPU-DML ['DmlExecutionProvider', 'CPUExecutionProvider']<br>
+> session providers: ['DmlExecutionProvider', 'CPUExecutionProvider']<br>
 
-> case: onnxruntime providers *DO NOT* contains DmlExecutionProvider.
-> fix:(reinstall packages)
-   > pip uninstall onnxruntime-gpu
-   > pip uninstall onnxruntime-directml
-   > pip uninstall onnxruntime
-   > pip install onnxruntime
-   > pip install onnxruntime-directml
+> case: onnxruntime providers *DO NOT* contains DmlExecutionProvider.<br>
+> fix:(reinstall packages)<br>
+   > pip uninstall onnxruntime-gpu onnxruntime-directml onnxruntime<br>
+   > pip install onnxruntime<br>
+   > pip install onnxruntime-directml<br>
 
 ### 2. CUDA
 > pip install onnxruntime-gpu
-```
+```python
 import onnxruntime
 session = onnxruntime.InferenceSession(model_file_path, providers=['CUDAExecutionProvider'])
 print("onnxruntime providers:",onnxruntime.get_device(),onnxruntime.get_available_providers())
 print("session providers:", session.get_providers())
 ```
-> expect:
-> onnxruntime providers: GPU ['TensorrtExecutionProvider', 'CUDAExecutionProvider', 'CPUExecutionProvider']
-> session providers: ['CUDAExecutionProvider', 'CPUExecutionProvider']
+> expect:<br>
+> onnxruntime providers: GPU ['TensorrtExecutionProvider', 'CUDAExecutionProvider', 'CPUExecutionProvider']<br>
+> session providers: ['CUDAExecutionProvider', 'CPUExecutionProvider']<br>
 
-> case1: onnxruntime providers *DO NOT* contains CUDAExecutionProvider.
-> fix: reinstall packages as before
+> case1: onnxruntime providers *DO NOT* contains CUDAExecutionProvider.<br>
+> fix: reinstall packages as before<br>
 
-> case2: only session providers *DO NOT* contains CUDAExecutionProvider.
-> fix: install and import torch 
+> case2: only session providers *DO NOT* contains CUDAExecutionProvider.<br>
+> fix: install and import torch <br>
 
 ## 6. Install [pytorch](https://pytorch.org/)
-> pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu124
-> (excute in AIEnv environment)
-```
+> pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu124<br>
+> (excute in AIEnv environment)<br>
+```python
 import torch
 print(torch.cuda.is_available(), torch.backends.cudnn.version())
 ```
@@ -66,7 +64,7 @@ print(torch.cuda.is_available(), torch.backends.cudnn.version())
 
 ## 6.Sameple python code:
 
-```
+```python
 import onnxruntime as ort
 from PIL import Image
 import torch
@@ -114,17 +112,17 @@ for i in range(10):
     print(f"Label: {labels[top10.indices[0][i]]}, Confidence: {top10.values[0][i].item():.4f}")
 ```
 
-> expect:
-> Available providers: ['CPUExecutionProvider']
-> Current provider: {'CPUExecutionProvider': {}}
-> Top 10 predictions for ResNet50 v2...
-> Label: golden retriever, Confidence: 0.8391
-> Label: kuvasz, Confidence: 0.0905
-> Label: otterhound, Confidence: 0.0135
-> Label: clumber, Confidence: 0.0101
-> Label: Sussex spaniel, Confidence: 0.0072
-> Label: Labrador retriever, Confidence: 0.0060
-> Label: Tibetan terrier, Confidence: 0.0035
-> Label: Great Pyrenees, Confidence: 0.0028
-> Label: Saluki, Confidence: 0.0027
-> Label: English setter, Confidence: 0.0021
+> expect:<br>
+> Available providers: ['CPUExecutionProvider']<br>
+> Current provider: {'CPUExecutionProvider': {}}<br>
+> Top 10 predictions for ResNet50 v2...<br>
+> Label: golden retriever, Confidence: 0.8391<br>
+> Label: kuvasz, Confidence: 0.0905<br>
+> Label: otterhound, Confidence: 0.0135<br>
+> Label: clumber, Confidence: 0.0101<br>
+> Label: Sussex spaniel, Confidence: 0.0072<br>
+> Label: Labrador retriever, Confidence: 0.0060<br>
+> Label: Tibetan terrier, Confidence: 0.0035<br>
+> Label: Great Pyrenees, Confidence: 0.0028<br>
+> Label: Saluki, Confidence: 0.0027<br>
+> Label: English setter, Confidence: 0.0021<br>
